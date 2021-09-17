@@ -64,18 +64,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * The configuration does three things:
-     * 1. permit path /login without authentication
-     * 2. disable csrf(Cross-Site Request Forgery) to permit the cross-site request
-     * 3. set all other request should be authenticated before performing these requests
+     * The configuration does five things:
+     * 1. disable csrf(Cross-Site Request Forgery) to permit the cross-site request
+     * 2. permit accessing path <code>/login</code> without authentication
+     * 3. config that access path like <code>/admin/**</code> with <code>ROLE_ADMIN</code> authority
+     * 4. config that access path like <code>/user/**</code> with <code>ROLE_USER</code> authority
+     * 5. set all other request should be authenticated before performing these requests
      * @param http the spring security's configuration entity
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/login").permitAll()
-                .and()
-                .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .anyRequest().authenticated();
     }
 
     /**
