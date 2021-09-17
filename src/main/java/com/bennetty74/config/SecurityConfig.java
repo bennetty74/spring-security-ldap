@@ -2,15 +2,20 @@ package com.bennetty74.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.server.UnboundIdContainer;
+import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
 
 import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author bennetty74
@@ -48,8 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .passwordCompare()
                 .passwordEncoder(passwordEncoder())
-                .passwordAttribute("userPassword");
-        System.out.println(passwordEncoder().encode("1234"));
+                .passwordAttribute("userPassword")
+                .and()
+                .ldapAuthoritiesPopulator(new LdapAuthoritiesPopulator() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getGrantedAuthorities(DirContextOperations userData, String username) {
+                        return Collections.emptyList();
+                    }
+                });
     }
 
     /**

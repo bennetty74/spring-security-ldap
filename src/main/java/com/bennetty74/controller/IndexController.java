@@ -12,6 +12,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String hello(){
-        return "Hello Spring Security";
+        return "Hello Spring Security LDAP";
     }
 }
