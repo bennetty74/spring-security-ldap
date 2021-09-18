@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bennetty74.mapper.RoleMapper">
+    <select id="selectUserRoles" resultType="com.bennetty74.bean.Role">
+        select r.id, r.name from user u, role r ,user_role ur
+        where u.username=ur.username and ur.role_name=r.name and u.username=#{username}
+    </select>
+</mapper>

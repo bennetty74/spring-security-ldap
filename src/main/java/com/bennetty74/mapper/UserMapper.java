@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
  * @date 2021.9.12
  */
 @Mapper
-@Repository
 public interface UserMapper {
 
     /**
@@ -18,7 +17,6 @@ public interface UserMapper {
      * @param username an unique username in user table
      * @return a user if exist, else return null
      */
-    @Select("select * from user where username=#{username}")
     User selectByUsername(String username);
 
 }

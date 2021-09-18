@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bennetty74.mapper.MenuMapper">
+    <select id="selectMenusByRoles" resultType="com.bennetty74.bean.Menu">
+        select distinct m.* from menu m, role r, menu_role mr
+        <where>
+            m.name=mr.menu_name and r.name=mr.role_name
+            and r.name in
+            <foreach collection="roleList" item="item" open="(" close=")" index="index" separator=",">
+                #{item.name}
+            </foreach>
+        </where>
+    </select>
+</mapper>

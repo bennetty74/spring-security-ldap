@@ -1,8 +1,13 @@
+jasypt:
+  encryptor:
+    password: JKL
+    algorithm: PBEWithMD5AndDES
+
 spring:
   datasource:
     url: jdbc:mysql://121.4.208.247:3306/spring_security?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-    username: root
-    password: Judge@1024
+    username: ENC(js25K9mNnlRLNf/Lt91ocVKI3SE0ciIH)
+    password: ENC(ttvzUSyQnnaUEgPn9DE31OA3UdbX9mEcZInXHyQSRJU=)
     driver-class-name: com.mysql.cj.jdbc.Driver
 logging:
   level:
@@ -20,3 +25,8 @@ server:
   servlet:
     context-path: /spring-security-ldap
 
+# specify the location of mapper and mapping between database tables and java beans
+mybatis:
+#  mapper-locations: /mapper/
+  configuration:
+    map-underscore-to-camel-case: true

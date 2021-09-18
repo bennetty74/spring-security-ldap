@@ -35,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Resource
+    LdapCustomAuthoritiesPopulator ldapCustomAuthoritiesPopulator;
+
     /**
      * config the ldap authentication params
      * the port of url is according to {@link #ldapContainer()}
@@ -55,12 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder())
                 .passwordAttribute("userPassword")
                 .and()
-                .ldapAuthoritiesPopulator(new LdapAuthoritiesPopulator() {
-                    @Override
-                    public Collection<? extends GrantedAuthority> getGrantedAuthorities(DirContextOperations userData, String username) {
-                        return Collections.emptyList();
-                    }
-                });
+                .ldapAuthoritiesPopulator(ldapCustomAuthoritiesPopulator);
     }
 
     /**
